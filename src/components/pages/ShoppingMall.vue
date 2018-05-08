@@ -52,6 +52,7 @@
         <!-- swiper-default -->
         <swiperDefault></swiperDefault>
         <swiperDefault2></swiperDefault2>
+        <swiperScroll></swiperScroll>
     </div>
 </template>
 
@@ -62,6 +63,7 @@ import "swiper/dist/css/swiper.css"
 import { swiper, swiperSlide } from "vue-awesome-swiper"
 import swiperDefault from "../swiper/swiperDefault"
 import swiperDefault2 from "../swiper/swiperDefault2"
+import swiperScroll from "../swiper/swiperScroll"
 
 export default {
   data() {
@@ -82,6 +84,7 @@ export default {
     swiperSlide,
     swiperDefault,
     swiperDefault2,
+    swiperScroll,
   },
   created() {
     axios({
