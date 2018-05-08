@@ -40,7 +40,7 @@ export default {
   },
   components: {
     swiper,
-    swiperSlide
+    swiperSlide,
   }
 };
 </script>
