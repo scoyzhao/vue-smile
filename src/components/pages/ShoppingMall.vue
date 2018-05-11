@@ -55,27 +55,7 @@
         <swiperScroll></swiperScroll> -->
 
         <!-- floor area -->
-        <div class="floor-area">
-          <div class="floor-title">热销食品</div>
-          <div class="floor-anomaly">
-            <div class="floor-one">
-              <img :src="floor1_0.image" alt="" width="100%">
-            </div>
-            <div>
-              <div class="floor-two">
-                <img :src="floor1_1.image" alt="" width="100%">              
-              </div>
-              <div>
-                <img :src="floor1_2.image" alt="" width="100%">              
-              </div>
-            </div>
-          </div>
-          <div class="floor-rule">
-            <div v-for="(item, index) in floor1.slice(3)" :key="index">
-              <img :src="item.image" alt="" width="100%">
-            </div>
-          </div>
-        </div>
+        <floor-component :floorData="floor1"></floor-component>
     </div>
 </template>
 
@@ -87,6 +67,7 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 // import swiperDefault from "../swiper/swiperDefault"
 // import swiperDefault2 from "../swiper/swiperDefault2"
 // import swiperScroll from "../swiper/swiperScroll"
+import floorComponent from "../component/floorComponent";
 
 export default {
   data() {
@@ -100,18 +81,16 @@ export default {
       swiperOption: {
         slidesPerView: 3
       },
-      floor1: [],
-      floor1_0: {},
-      floor1_1: {},
-      floor1_2: {}
+      floor1: []
     };
   },
   components: {
     swiper,
-    swiperSlide
+    swiperSlide,
     // swiperDefault,
     // swiperDefault2,
     // swiperScroll,
+    floorComponent
   },
   created() {
     axios({
@@ -125,9 +104,6 @@ export default {
         this.adBanner = res.data.data.advertesPicture.PICTURE_ADDRESS;
         this.recommendGoods = res.data.data.recommend;
         this.floor1 = res.data.data.floor1;
-        this.floor1_0 = this.floor1[0];
-        this.floor1_1 = this.floor1[1];
-        this.floor1_2 = this.floor1[2];
       })
       .catch(err => {
         console.log(err);
@@ -194,47 +170,5 @@ export default {
   border-right: 1px solid #eee;
   font-size: 12px;
   text-align: center;
-}
-.floor-area {
-  margin-top: 0.3rem;
-  background-color: #fff;
-}
-.floor-title {
-  padding: 0.2rem;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
-  color: #e5017d;
-}
-.floor-anomaly {
-  display: flex;
-  flex-direction: row;
-  /* background-color: #fff; */
-  border-bottom: 1px solid #ddd;
-}
-.floor-anomaly div {
-  width: 10rem;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
-.floor-one {
-  border-right: 1px solid #ddd;
-}
-.floor-two {
-  border-bottom: 1px solid #ddd;
-}
-.floor-rule {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  /* background-color: #fff; */
-}
-.floor-rule div {
-  width: 10rem;
-  border-bottom: 1px solid #ddd;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
-.floor-rule div:nth-child(odd) {
-  border-right: 1px solid #ddd;
 }
 </style>
