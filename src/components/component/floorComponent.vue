@@ -1,5 +1,6 @@
 <template>
     <div class="floor-area">
+      <div class="floor-title">{{ floorTitle }}</div>
       <div class="floor-anomaly">
         <div class="floor-one">
           <img :src="floorData0.image" alt="" width="100%">
@@ -23,7 +24,7 @@
 
 <script>
 export default {
-  props: ["floorData"],
+  props: ["floorData", "floorTitle"],
   data() {
     return {
       floorData0: {},
@@ -52,9 +53,12 @@ export default {
   background-color: #fff;
 }
 .floor-title {
-  padding: 0.2rem;
+  /* padding: 0.2rem; */
+  text-align: center;
   border-bottom: 1px solid #eee;
   font-size: 14px;
+  height: 1.8rem;
+  line-height: 1.8rem;
   color: #e5017d;
 }
 .floor-anomaly {
