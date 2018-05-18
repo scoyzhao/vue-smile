@@ -58,6 +58,21 @@
         <floor-component :floorData="floor1" :floorTitle="floorName.floor1"></floor-component>
         <floor-component :floorData="floor2" :floorTitle="floorName.floor2"></floor-component>
         <floor-component :floorData="floor3" :floorTitle="floorName.floor3"></floor-component>
+        
+        <!--Hot Area-->
+        <div class="hot-area">
+          <div class="hot-title">热卖商品</div>
+          <div class="hot-goods">
+            <!--list组件-->
+            <van-list>
+              <van-row gutter="20">
+                <van-col span="12" v-for="(item, index) in hotGoods" :key="index">
+                  <goods-info-component :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goods-info-component>
+                </van-col>
+              </van-row>
+            </van-list>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -70,6 +85,7 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 // import swiperDefault2 from "../swiper/swiperDefault2"
 // import swiperScroll from "../swiper/swiperScroll"
 import floorComponent from "../component/floorComponent";
+import goodsInfoComponent from "../component/goodsInfoComponent";
 
 import { toMoney } from "@/filter/moneyFilter.js";
 
@@ -88,7 +104,8 @@ export default {
       floor1: [],
       floor2: [],
       floor3: [],
-      floorName: {}
+      floorName: {},
+      hotGoods: []
     };
   },
   filters: {
@@ -102,7 +119,8 @@ export default {
     // swiperDefault,
     // swiperDefault2,
     // swiperScroll,
-    floorComponent
+    floorComponent,
+    goodsInfoComponent
   },
   created() {
     axios({
@@ -119,6 +137,7 @@ export default {
         this.floor1 = res.data.data.floor1;
         this.floor2 = res.data.data.floor2;
         this.floor3 = res.data.data.floor3;
+        this.hotGoods = res.data.data.hotGoods;
       })
       .catch(err => {
         console.log(err);
@@ -172,9 +191,11 @@ export default {
   background-color: #fff;
 }
 .recommend-title {
-  padding: 0.2rem;
+  text-align: center;
   border-bottom: 1px solid #eee;
   font-size: 14px;
+  height: 1.8rem;
+  line-height: 1.8rem;
   color: #e5017d;
 }
 .recommend-body {
@@ -185,5 +206,17 @@ export default {
   border-right: 1px solid #eee;
   font-size: 12px;
   text-align: center;
+}
+.hot-area {
+  margin-top: 0.3rem;
+  background-color: #fff;
+  text-align: center;
+  font-size: 14px;
+  height: 1.8rem;
+  line-height: 1.8rem;
+}
+.hot-title {
+  border-bottom: 1px solid #eee;
+  color: #e5017d;
 }
 </style>
