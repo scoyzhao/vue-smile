@@ -81,6 +81,7 @@ import axios from "axios";
 
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+
 // import swiperDefault from "../swiper/swiperDefault"
 // import swiperDefault2 from "../swiper/swiperDefault2"
 // import swiperScroll from "../swiper/swiperScroll"
@@ -88,6 +89,7 @@ import floorComponent from "../component/floorComponent";
 import goodsInfoComponent from "../component/goodsInfoComponent";
 
 import { toMoney } from "@/filter/moneyFilter.js";
+import URL from "@/serviceAPI.config.js";
 
 export default {
   data() {
@@ -124,8 +126,7 @@ export default {
   },
   created() {
     axios({
-      url:
-        "https://www.easy-mock.com/mock/5ae58725c6c41f6d3e8fc0f5/SmileVue/index",
+      url: URL.getShoppingMallInfo,
       method: "get"
     })
       .then(res => {
