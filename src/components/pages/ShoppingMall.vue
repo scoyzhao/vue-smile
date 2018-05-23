@@ -58,7 +58,6 @@
         <floor-component :floorData="floor1" :floorTitle="floorName.floor1"></floor-component>
         <floor-component :floorData="floor2" :floorTitle="floorName.floor2"></floor-component>
         <floor-component :floorData="floor3" :floorTitle="floorName.floor3"></floor-component>
-        
         <!--Hot Area-->
         <div class="hot-area">
           <div class="hot-title">热卖商品</div>
