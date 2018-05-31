@@ -2,13 +2,20 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-27 19:04:17 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-05-27 19:29:52
+ * @Last Modified time: 2018-05-31 09:22:44
  */
 
 const mongoose = require('mongoose')
+const glob = require('glob')
+const { resolve } = require('path')
+
 const db = 'mongodb://localhost/smile-db'
 
 mongoose.Promise = global.Promise
+
+exports.initSchemas = () => {
+    glob.sync(resolve(__dirname, './schema', '**/*.js')).forEach(require)
+}
 
 exports.connect = () => {
     //连接数据库

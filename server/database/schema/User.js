@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-30 14:45:07 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-05-30 14:51:42
+ * @Last Modified time: 2018-05-31 09:32:26
  */
 
 const mongoose = require('mongoose')
@@ -31,4 +31,4 @@ const userSchema = new Schema({
 })
 
 // 发布模型
-mongoose.model('User', userSchema)
+mongoose.model('User', userSchema, 'User')
