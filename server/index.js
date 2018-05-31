@@ -2,14 +2,14 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-23 15:05:58 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-05-31 09:29:34
+ * @Last Modified time: 2018-05-31 11:04:32
  */
 
 const Koa = require('koa')
 const app = new Koa()
 const mongoose = require('mongoose')
 
-const { connect, initSchemas } = require('./database/init')
+const { connect, initSchemas } = require('./database/init.js')
 
 ;(async () => {
     await connect()
