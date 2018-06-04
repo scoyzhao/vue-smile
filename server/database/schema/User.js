@@ -2,17 +2,17 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-30 14:45:07 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-05-31 10:59:30
+ * @Last Modified time: 2018-06-04 16:07:17
  */
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const bcrypt = require('bcrypt')
+const SALT_WORK_FACTOR = 10
 
 // 这是mongoose原生的
 let ObjectId = Schema.Types.ObjectId
 
-// TODO:这里只是介绍，之后会介绍一些实际项目中的，
-// 比如说加盐等
 const userSchema = new Schema({
     UserId: ObjectId,
     userName: {
@@ -26,9 +26,25 @@ const userSchema = new Schema({
     },
     lastLoginAt: {
         type: Date,
-        default: Date.now(),        
+        default: Date.now(),
     },
 })
 
+userSchema.pre('save', (next) => {
+    bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+        if (err) {
+            return next(err)
+        }
+        // this -> userSchema
+        bcrypt.hash(this.password, salt, (err, hash) => {
+            if (err) {
+                return next(err)
+            }
+            this.password = hash
+            next()
+        })
+    })
+})
+
 // 发布模型
-module.exports = mongoose.model('User', userSchema, 'User')
+mongoose.model('User', userSchema, 'User')
