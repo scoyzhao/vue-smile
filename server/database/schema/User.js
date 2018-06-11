@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-30 14:45:07 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-04 16:07:17
+ * @Last Modified time: 2018-06-11 10:30:53
  */
 
 const mongoose = require('mongoose')
@@ -30,12 +30,12 @@ const userSchema = new Schema({
     },
 })
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function (next) {
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
         if (err) {
             return next(err)
         }
-        // this -> userSchema
+        console.log(this.password)
         bcrypt.hash(this.password, salt, (err, hash) => {
             if (err) {
                 return next(err)
