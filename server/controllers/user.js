@@ -6,8 +6,9 @@ router.get('/', async(ctx) => {
     ctx.body = 'user'
 })
 
-router.get('/register', async(ctx) => {
-    ctx.body = 'user register'
+router.post('/register', async(ctx) => {
+    console.log(ctx.request.body)
+    ctx.body = ctx.request.body
 })
 
 module.exports = router

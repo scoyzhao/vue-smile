@@ -3,12 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import serviceApi from './serviceAPI.config.js'
 
 import { Button, Row, Col, Swipe, SwipeItem, Lazyload, List, Field, NavBar } from 'vant'
 
 Vue.use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(List).use(Field).use(NavBar)
 
 Vue.config.productionTip = false
+
+Vue.prototype.$url = serviceApi
 
 /* eslint-disable no-new */
 new Vue({

@@ -88,7 +88,6 @@ import floorComponent from "../component/floorComponent";
 import goodsInfoComponent from "../component/goodsInfoComponent";
 
 import { toMoney } from "@/filter/moneyFilter.js";
-import URL from "@/serviceAPI.config.js";
 
 export default {
   data() {
@@ -125,7 +124,7 @@ export default {
   },
   created() {
     axios({
-      url: URL.getShoppingMallInfo,
+      url: this.$url.getShoppingMallInfo,
       method: "get"
     })
       .then(res => {
