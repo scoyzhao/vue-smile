@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-30 14:45:07 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-11 10:30:53
+ * @Last Modified time: 2018-06-14 09:11:33
  */
 
 const mongoose = require('mongoose')
@@ -35,7 +35,6 @@ userSchema.pre('save', function (next) {
         if (err) {
             return next(err)
         }
-        console.log(this.password)
         bcrypt.hash(this.password, salt, (err, hash) => {
             if (err) {
                 return next(err)
