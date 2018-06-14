@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-30 14:45:07 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-14 09:11:33
+ * @Last Modified time: 2018-06-14 09:54:08
  */
 
 const mongoose = require('mongoose')
@@ -28,6 +28,8 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now(),
     },
+}, {
+    collection: 'user'
 })
 
 userSchema.pre('save', function (next) {
@@ -46,4 +48,4 @@ userSchema.pre('save', function (next) {
 })
 
 // 发布模型
-mongoose.model('User', userSchema, 'User')
+mongoose.model('User', userSchema)

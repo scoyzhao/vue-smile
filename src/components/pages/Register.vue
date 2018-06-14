@@ -23,66 +23,71 @@
                 required
             />
             <div class="register-button">
-                <van-button type="primary"  @click="registerUser" size="large">马上注册</van-button>
+                <van-button type="primary"  @click="registerUser"  :loading="openLoading" size="large">马上注册</van-button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import axios from 'axios'
-    import { Toast } from 'vant'
+import axios from "axios";
+import { Toast } from "vant";
 
-    export default {
-        data() {
-            return {
-                username: '',
-                password: '',
-            }
-        },
-        methods: {
-            goBack() {
-                this.$router.go(-1)
-            },
-            registerUser() {
-                axios({
-                    url: this.$url.registerUser,
-                    method: 'post',
-                    data: {
-                        userName: this.username,
-                        password: this.password,
-                    }
-                })
-                .then((res) => {
-                    console.log(res)
-                    if (res.data.code === 200) {
-                        Toast.success(res.data.message)
-                    } else {
-                        Toast.fail('注册失败')
-                    }
-                })
-                .catch((err) => {
-                    Toast.fail('注册失败')
-                    console.log(err)
-                })
-            },
-        },
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+      // 是否开启用户的Loading
+      openLoading: false
+    };
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+    registerUser() {
+      // 进入这个方法的时候，先让他loading，防止重复提交
+      this.openLoading = true
+      axios({
+        url: this.$url.registerUser,
+        method: "post",
+        data: {
+          userName: this.username,
+          password: this.password
+        }
+      })
+        .then(res => {
+          if (res.data.code === 200) {
+            Toast.success(res.data.message);
+            this.$router.push("/");
+          } else {
+            Toast.fail("注册失败");
+            this.openLoading = false;
+          }
+        })
+        .catch(err => {
+          Toast.fail("注册失败");
+          this.openLoading = false;
+        });
     }
+  }
+};
 </script>
 
 <style scoped>
 .wrap {
-    background-color: white;
+  background-color: white;
 }
 .register-panel {
-    width: 90%;
-    border-radius: 5%;
-    margin: 0 auto;
-    padding: 5rem 0;
+  width: 90%;
+  border-radius: 5%;
+  margin: 0 auto;
+  padding: 5rem 0;
 }
 .register-button {
-    width: 40%;
-    padding-top: 5rem;
-    padding-left: 10rem;
+  width: 40%;
+  padding-top: 5rem;
+  padding-left: 10rem;
 }
 </style>
