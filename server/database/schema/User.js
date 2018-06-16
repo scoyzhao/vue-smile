@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-30 14:45:07 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-14 09:54:08
+ * @Last Modified time: 2018-06-16 11:02:57
  */
 
 const mongoose = require('mongoose')
@@ -28,8 +28,6 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now(),
     },
-}, {
-    collection: 'user'
 })
 
 userSchema.pre('save', function (next) {
