@@ -1,12 +1,12 @@
 <template>
     <div class="wrap">
         <van-nav-bar
-            title="用户注册"
+            title="用户登陆"
             left-text="返回"
             left-arrow
             @click-left="goBack"
         />
-        <div class="register-panel">
+        <div class="login-panel">
             <van-field 
                 v-model="username"
                 label="用户名"
@@ -24,8 +24,8 @@
                 required
                 :error-message="passwordErrorMsg"
             />
-            <div class="register-button">
-                <van-button type="primary"  @click="registerAction"  :loading="openLoading" size="large">马上注册</van-button>
+            <div class="login-button">
+                <van-button type="primary"  @click="loginAction"  :loading="openLoading" size="large">马上登陆</van-button>
             </div>
         </div>
     </div>
@@ -50,11 +50,12 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    //用户注册
-    registerUser() {
+    //用户登陆
+    loginUser() {
       // 进入这个方法的时候，先让他loading，防止重复提交
       this.openLoading = true;
       axios({
+        // TODO:这里的api还没改
         url: this.$url.registerUser,
         method: "post",
         data: {
@@ -67,12 +68,12 @@ export default {
             Toast.success(res.data.message);
             this.$router.push("/");
           } else {
-            Toast.fail("注册失败");
+            Toast.fail("登陆失败");
             this.openLoading = false;
           }
         })
         .catch(err => {
-          Toast.fail("注册失败");
+          Toast.fail("登陆失败");
           this.openLoading = false;
         });
     },
@@ -96,9 +97,9 @@ export default {
 
       return isOk;
     },
-    // 完整注册逻辑
-    registerAction() {
-      this.checkForm() && this.registerUser();
+    // 完整登陆逻辑
+    loginAction() {
+      this.checkForm() && this.loginUser();
     }
   }
 };
@@ -108,13 +109,13 @@ export default {
 .wrap {
   background-color: white;
 }
-.register-panel {
+.login-panel {
   width: 90%;
   border-radius: 5%;
   margin: 0 auto;
   padding: 5rem 0;
 }
-.register-button {
+.login-button {
   width: 40%;
   padding-top: 5rem;
   padding-left: 10rem;
