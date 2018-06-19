@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-23 14:45:08 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-12 09:55:45
+ * @Last Modified time: 2018-06-19 15:40:41
  */
 
 /**
@@ -16,6 +16,7 @@ const URL = {
     getShoppingMallInfo: BASEURL + 'index',
     getGoodsInfo: BASEURL + 'goodsInfo',
     registerUser: LOCALURL + 'user/register',
+    login: LOCALURL + 'user/login',
 }
 
 /**

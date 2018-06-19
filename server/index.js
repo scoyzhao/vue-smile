@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-23 15:05:58 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-14 09:09:55
+ * @Last Modified time: 2018-06-19 16:07:13
  */
 
 const Koa = require('koa')
@@ -15,7 +15,6 @@ const router = new Router()
 
 const { connect, initSchemas } = require('./database/init.js')
 const user = require('./controllers/user.js')
-
 
 ;(async () => {
     await connect()

@@ -55,24 +55,25 @@ export default {
       // 进入这个方法的时候，先让他loading，防止重复提交
       this.openLoading = true;
       axios({
-        // TODO:这里的api还没改
-        url: this.$url.registerUser,
+        url: this.$url.login,
         method: "post",
         data: {
           userName: this.username,
           password: this.password
         }
       })
-        .then(res => {
-          if (res.data.code === 200) {
-            Toast.success(res.data.message);
+        .then((res) => {
+          // 密码与用户名匹配
+          if (res.data.code === 200 && res.data.message === true) {
+            Toast.success("登陆成功");
             this.$router.push("/");
           } else {
-            Toast.fail("登陆失败");
+            // 返回200，但是密码不匹配
+            Toast.fail("密码错误");
             this.openLoading = false;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           Toast.fail("登陆失败");
           this.openLoading = false;
         });

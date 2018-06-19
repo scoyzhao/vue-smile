@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-30 14:45:07 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-16 11:02:57
+ * @Last Modified time: 2018-06-19 15:28:47
  */
 
 const mongoose = require('mongoose')
@@ -44,6 +44,21 @@ userSchema.pre('save', function (next) {
         })
     })
 })
+
+// 添加比较密码的代码
+userSchema.methods = {
+    comparePassword: (_password, password) => {
+        return new Promise((resolve, reject) => {
+            bcrypt.compare(_password, password, (err, isMatch) => {
+                if (!err) {
+                    resolve(isMatch)
+                } else {
+                    reject(err)
+                }
+            })
+        })
+    }
+}
 
 // 发布模型
 mongoose.model('User', userSchema)
