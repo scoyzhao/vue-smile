@@ -46,6 +46,12 @@ export default {
       passwordErrorMsg: ""
     };
   },
+  created() {
+    if (localStorage.userInfo) {
+      Toast.success("您已经登陆");
+      this.$router.push("/");
+    }
+  },
   methods: {
     goBack() {
       this.$router.go(-1);
@@ -62,18 +68,33 @@ export default {
           password: this.password
         }
       })
-        .then((res) => {
+        .then(res => {
           // 密码与用户名匹配
           if (res.data.code === 200 && res.data.message === true) {
-            Toast.success("登陆成功");
-            this.$router.push("/");
+            // 登陆状态存储
+            new Promise((resolve, reject) => {
+              localStorage.userInfo = {
+                userName: this.username
+              };
+              setTimeout(() => {
+                resolve();
+              }, 500);
+            })
+              .then(() => {
+                Toast.success("登陆成功");
+                this.$router.push("/");
+              })
+              .catch(err => {
+                Toast.fail("登陆状态保存失败");
+                this.openLoading = false;
+                console.log(err);
+              });
           } else {
-            // 返回200，但是密码不匹配
-            Toast.fail("密码错误");
+            Toast.fail("登陆失败");
             this.openLoading = false;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           Toast.fail("登陆失败");
           this.openLoading = false;
         });

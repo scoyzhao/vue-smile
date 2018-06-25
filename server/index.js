@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-23 15:05:58 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-19 16:07:13
+ * @Last Modified time: 2018-06-25 10:32:23
  */
 
 const Koa = require('koa')
@@ -15,6 +15,7 @@ const router = new Router()
 
 const { connect, initSchemas } = require('./database/init.js')
 const user = require('./controllers/user.js')
+const good = require('./controllers/good.js')
 
 ;(async () => {
     await connect()
@@ -25,6 +26,7 @@ app.use(cors())
 app.use(bodyParser())
 // 装载所有子路由
 router.use('/user', user.routes())
+router.use('/good', good.routes())
 
 // 加载路由中间件
 app.use(router.routes())
