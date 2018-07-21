@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-23 14:45:08 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-06-19 15:40:41
+ * @Last Modified time: 2018-07-14 15:19:24
  */
 
 /**
@@ -17,6 +17,7 @@ const URL = {
     getGoodsInfo: BASEURL + 'goodsInfo',
     registerUser: LOCALURL + 'user/register',
     login: LOCALURL + 'user/login',
+    getDetailGoodsInfo: LOCALURL + 'good/getDetailGoodsInfo', // 获取商品详情
 }
 
 /**
