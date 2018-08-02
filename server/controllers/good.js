@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-06-25 10:23:39 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-07-21 15:46:23
+ * @Last Modified time: 2018-08-02 22:49:10
  */
 
 const Router = require('koa-router')
@@ -127,14 +127,12 @@ router.get('/getCategoryList', async (ctx) => {
     }
 })
 
-// 读取小类(测试)
-router.get('/getCategorySubList', async (ctx) => {
+// 读取小类
+router.post('/getCategorySubList', async (ctx) => {
     try {
-        // 之后用这个
-        // let categoryId = ctx.request.body.categoryId
-        let categoryId = 1
+        let categoryID = ctx.request.body.categoryID
         const CategorySub = mongoose.model('CategorySub')
-        let result = await CategorySub.find({ MALL_CATEGORY_ID: categoryId }).exec()
+        let result = await CategorySub.find({ MALL_CATEGORY_ID: categoryID }).exec()
         ctx.body = {
             code: 200,
             message: result,
@@ -148,13 +146,20 @@ router.get('/getCategorySubList', async (ctx) => {
 })
 
 
-// 根据类别获取商品列表（测试）
-router.get('/getGoodsListByCategorySubID', async (ctx) => {
+// 根据类别获取商品列表
+router.post('/getGoodsListByCategorySubID', async (ctx) => {
     try {
-        //let categorySubId = ctx.request.body.categoryId
-        let categorySubId = '2c9f6c946016ea9b016016f79c8e0000'
+        let categorySubId = ctx.request.body.categorySubId,
+            page = ctx.request.body.page,
+            num = 10 // 每页显示数量
+            start = (page - 1) * num // 开始位置
+
         const Goods = mongoose.model('Good')
-        let result = await Goods.find({ SUB_ID: categorySubId }).exec()
+        // skip表示跳过多少，limit表示返回多少
+        let result = await Goods.find({ SUB_ID: categorySubId })
+                        .skip(start)
+                        .limit(num)
+                        .exec()
         ctx.body = { 
             code: 200, 
             message: result,

@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-05-23 14:45:08 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-07-14 15:19:24
+ * @Last Modified time: 2018-08-02 22:50:53
  */
 
 /**
@@ -18,6 +18,9 @@ const URL = {
     registerUser: LOCALURL + 'user/register',
     login: LOCALURL + 'user/login',
     getDetailGoodsInfo: LOCALURL + 'good/getDetailGoodsInfo', // 获取商品详情
+    getCategoryList: LOCALURL + 'good/getCategoryList', // 获取大类详情
+    getCategorySubList: LOCALURL + 'good/getCategorySubList', // 获取小类详情
+    getGoodsListByCategorySubID: LOCALURL + 'good/getGoodsListByCategorySubID', // 获取小类商品信息    
 }
 
 /**
