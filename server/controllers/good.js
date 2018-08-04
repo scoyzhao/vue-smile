@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-06-25 10:23:39 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-08-02 22:49:10
+ * @Last Modified time: 2018-08-04 14:25:41
  */
 
 const Router = require('koa-router')
@@ -164,10 +164,10 @@ router.post('/getGoodsListByCategorySubID', async (ctx) => {
             code: 200, 
             message: result,
         }
-    } catch (error) {
+    } catch (err) {
         ctx.body = { 
             code: 500, 
-            message: error,
+            message: err,
         }
     }
 })

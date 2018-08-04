@@ -18,7 +18,7 @@
                 </van-col>
                 <van-col span="18">
                     <div class="tableCategorySub">
-                        <van-tabs v-model="active">
+                        <van-tabs v-model="active" @click="onClickCategorySub">
                             <van-tab v-for="(item, index) in categorySub" :key="index" :title="item.MALL_SUB_NAME">
                                 
                             </van-tab>
@@ -30,8 +30,14 @@
                                     :finished="finished"
                                     @load="onLoad"
                                 >
-                                    <div class="list-item" v-for="(item, index) in list" :key="index">
-                                        {{ item }}
+                                    <div class="list-item" v-for="(item, index) in goodList" :key="index">
+                                        <div class="list-item-img">
+                                            <img :src="item.IMAGE1" alt="" width="100%" :onerror="errorImg">
+                                        </div>
+                                        <div class="list-item-text">
+                                            <div>{{ item.NAME }}</div>
+                                            <div>￥{{ item.ORI_PRICE }}</div>
+                                        </div>
                                     </div>
                                 </van-list>
                             </van-pull-refresh>
@@ -56,8 +62,11 @@ export default {
       active: 0, // 激活标签的值
       loading: false, // 上拉加载
       finished: false, //上拉加载是否有数据
-      list: [], // 商品数据
-      isRefresh: false // 下拉刷新
+      page: 1, // 商品列表的页数
+      goodList: [], // 商品列表信息
+      categorySubId: "", // 商品子类id
+      isRefresh: false, // 下拉刷新
+      errorImg: 'this.src="' + require("@/assets/images/errorImg.jpg") + '"',
     };
   },
   created() {
@@ -76,10 +85,9 @@ export default {
         method: "get"
       })
         .then(res => {
-          console.log(res);
           if (res.data.code == 200 && res.data.message) {
             this.category = res.data.message;
-            this.getCategorySubByCategoryID(this.category[0].ID);
+            this.getCategorySubByCategoryId(this.category[0].ID);
           } else {
             Toast("服务器错误，数据取得失败");
           }
@@ -88,22 +96,28 @@ export default {
           console.log(err);
         });
     },
-    clickCategory(index, categoryID) {
+    // 得到小类的id
+    clickCategory(index, categoryId) {
       this.categoryIndex = index;
-      this.getCategorySubByCategoryID(categoryID);
+      this.page = 1;
+      this.finished = false;
+      this.goodList = [];
+      this.getCategorySubByCategoryId(categoryId);
     },
     // 根据大类id读取小类
-    getCategorySubByCategoryID(categoryID) {
+    getCategorySubByCategoryId(categoryId) {
       axios({
         url: this.$url.getCategorySubList,
         method: "post",
-        data: { categoryID }
+        data: { categoryID: categoryId }
       })
         .then(res => {
           // console.log(res)
           if (res.data.code == 200 && res.data.message) {
             this.categorySub = res.data.message;
             this.active = 0;
+            this.categorySubId = this.categorySub[0].ID;
+            this.onLoad();
           } else {
             Toast("服务器错误，数据取得失败");
           }
@@ -115,23 +129,57 @@ export default {
     // 上拉加载
     onLoad() {
       setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        this.loading = false;
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
+        // 有小类id，就去取，没有就去小类id第一个
+        this.categorySubId = this.categorySubId
+          ? this.categorySubId
+          : this.categorySub[0].ID;
+        this.getGoodList();
       }, 500);
     },
     // 下拉刷新
     onRefresh() {
-        setTimeout(() => {
-            this.isRefresh = false
-            this.finished = false
-            this.list = []
-            this.onLoad()
-        }, 500);
+      setTimeout(() => {
+        this.isRefresh = false;
+        this.finished = false;
+        this.goodList = [];
+        this.page = 1;
+        this.onLoad();
+      }, 500);
+    },
+    // 获取商品列表
+    getGoodList() {
+      axios({
+        url: this.$url.getGoodsListByCategorySubID,
+        method: "post",
+        data: {
+          categorySubId: this.categorySubId,
+          page: this.page
+        }
+      })
+        .then(res => {
+          console.log(res);
+          if (res.data.code == 200 && res.data.message.length) {
+            this.page++;
+            // 这里用到了数组连接的方法
+            this.goodList = this.goodList.concat(res.data.message);
+          } else {
+            this.finished = true;
+          }
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    // 点击子类获取subId
+    onClickCategorySub(index, title) {
+      this.categorySubId = this.categorySub[index].ID;
+      console.log(this.categorySubId);
+
+      this.goodList = [];
+      this.finished = false;
+      this.page = 1;
+      this.onLoad();
     }
   }
 };
@@ -152,12 +200,22 @@ li {
   background-color: white;
 }
 .list-item {
-  text-align: center;
-  line-height: 80px;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
   border-bottom: 1px solid #f0f0f0;
   background-color: #fff;
+  padding: 5px;
 }
 #list-div {
   overflow: scroll;
+}
+.list-item-img {
+  flex: 8;
+}
+.list-item-text {
+  flex: 16;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 </style>
