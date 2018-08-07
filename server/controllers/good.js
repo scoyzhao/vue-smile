@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-06-25 10:23:39 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-08-04 14:25:41
+ * @Last Modified time: 2018-08-07 21:52:44
  */
 
 const Router = require('koa-router')
@@ -152,21 +152,21 @@ router.post('/getGoodsListByCategorySubID', async (ctx) => {
         let categorySubId = ctx.request.body.categorySubId,
             page = ctx.request.body.page,
             num = 10 // 每页显示数量
-            start = (page - 1) * num // 开始位置
+        start = (page - 1) * num // 开始位置
 
         const Goods = mongoose.model('Good')
         // skip表示跳过多少，limit表示返回多少
         let result = await Goods.find({ SUB_ID: categorySubId })
-                        .skip(start)
-                        .limit(num)
-                        .exec()
-        ctx.body = { 
-            code: 200, 
+            .skip(start)
+            .limit(num)
+            .exec()
+        ctx.body = {
+            code: 200,
             message: result,
         }
     } catch (err) {
-        ctx.body = { 
-            code: 500, 
+        ctx.body = {
+            code: 500,
             message: err,
         }
     }

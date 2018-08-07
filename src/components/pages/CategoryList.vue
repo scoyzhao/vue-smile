@@ -30,13 +30,13 @@
                                     :finished="finished"
                                     @load="onLoad"
                                 >
-                                    <div class="list-item" v-for="(item, index) in goodList" :key="index">
+                                    <div class="list-item"  @click="goGoodInfo(item.ID)" v-for="(item, index) in goodList" :key="index">
                                         <div class="list-item-img">
                                             <img :src="item.IMAGE1" alt="" width="100%" :onerror="errorImg">
                                         </div>
                                         <div class="list-item-text">
                                             <div>{{ item.NAME }}</div>
-                                            <div>￥{{ item.ORI_PRICE }}</div>
+                                            <div>￥{{ item.ORI_PRICE | moneyFilter }}</div>
                                         </div>
                                     </div>
                                 </van-list>
@@ -53,6 +53,8 @@
 import axios from "axios";
 import { Toast } from "vant";
 
+import { toMoney } from "@/filter/moneyFilter.js"
+
 export default {
   data() {
     return {
@@ -66,8 +68,13 @@ export default {
       goodList: [], // 商品列表信息
       categorySubId: "", // 商品子类id
       isRefresh: false, // 下拉刷新
-      errorImg: 'this.src="' + require("@/assets/images/errorImg.jpg") + '"',
+      errorImg: 'this.src="' + require("@/assets/images/errorImg.jpg") + '"'
     };
+  },
+  filters: {
+    moneyFilter(money) {
+      return toMoney(money)
+    }
   },
   created() {
     this.getCategory();
@@ -180,6 +187,10 @@ export default {
       this.finished = false;
       this.page = 1;
       this.onLoad();
+    },
+    // 跳转到商品详细页面
+    goGoodInfo(id) {
+      this.$router.push({ name: "Good", params: { goodsId: id } });
     }
   }
 };
