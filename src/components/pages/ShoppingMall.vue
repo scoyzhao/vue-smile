@@ -218,4 +218,9 @@ export default {
   border-bottom: 1px solid #eee;
   color: #e5017d;
 }
+.hot-goods {
+  height: 130rem;
+  overflow: hidden;
+  background-color: #fff;
+}
 </style>

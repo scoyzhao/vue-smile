@@ -5,9 +5,9 @@ import App from './App'
 import router from './router'
 import serviceApi from './serviceAPI.config.js'
 
-import { Button, Row, Col, Swipe, SwipeItem, Lazyload, List, Field, NavBar, Tab, Tabs, PullRefresh } from 'vant'
+import { Cell, CellGroup, Tabbar, TabbarItem, Button, Row, Col, Swipe, SwipeItem, Lazyload, List, Field, NavBar, Tab, Tabs, PullRefresh, Stepper } from 'vant'
 
-Vue.use(Tab).use(Tabs).use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(List).use(Field).use(NavBar).use(PullRefresh)
+Vue.use(Cell).use(CellGroup).use(TabbarItem).use(Tabbar).use(Tab).use(Tabs).use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(List).use(Field).use(NavBar).use(PullRefresh).use(Stepper)
 
 Vue.config.productionTip = false
 

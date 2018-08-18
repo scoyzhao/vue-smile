@@ -20,7 +20,6 @@
                     <div class="tableCategorySub">
                         <van-tabs v-model="active" @click="onClickCategorySub">
                             <van-tab v-for="(item, index) in categorySub" :key="index" :title="item.MALL_SUB_NAME">
-                                
                             </van-tab>
                         </van-tabs>
                         <div id="list-div">
@@ -82,8 +81,8 @@ export default {
   // 只有在这里可以操作dom，就是dom加载完成以后
   mounted() {
     let winHeight = document.documentElement.clientHeight;
-    document.getElementById("leftNav").style.height = winHeight - 46 + "px";
-    document.getElementById("list-div").style.height = winHeight - 90 + "px";
+    document.getElementById("leftNav").style.height = winHeight - 46 - 50 + "px";
+    document.getElementById("list-div").style.height = winHeight - 90 - 50 + "px";
   },
   methods: {
     getCategory() {

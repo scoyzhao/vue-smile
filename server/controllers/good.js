@@ -2,7 +2,7 @@
  * @Author: scoyzhao 
  * @Date: 2018-06-25 10:23:39 
  * @Last Modified by: scoyzhao
- * @Last Modified time: 2018-08-07 21:52:44
+ * @Last Modified time: 2018-08-18 15:47:31
  */
 
 const Router = require('koa-router')
@@ -97,7 +97,7 @@ router.post('/getDetailGoodsInfo', async (ctx) => {
     //     })
 
     try {
-        let result = await Goods.findOne({ ID: goodsId }).exec()
+        let result = await Good.findOne({ ID: goodsId }).exec()
         ctx.body = {
             code: 200,
             message: result,

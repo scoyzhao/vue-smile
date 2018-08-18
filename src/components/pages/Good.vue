@@ -37,7 +37,7 @@
         <!-- footer -->
         <div class="good-bottom">
             <div>
-                <van-button size="large" type="primary">加入购物车</van-button>
+                <van-button size="large" type="primary" @click="addGoodsToCart">加入购物车</van-button>
             </div>
             <div>
                 <van-button size="large" type="danger">直接购买</van-button>
@@ -49,7 +49,7 @@
 <script>
 import axios from "axios";
 import { Toast } from "vant";
-import { toMoney } from "@/filter/moneyFilter.js"
+import { toMoney } from "@/filter/moneyFilter.js";
 
 export default {
   data() {
@@ -60,8 +60,10 @@ export default {
     };
   },
   created() {
-    this.goodsId = this.$route.query.goodsId? this.$route.query.goodsId: this.$route.params.goodsId;
-    console.log(this.goodsId)
+    this.goodsId = this.$route.query.goodsId
+      ? this.$route.query.goodsId
+      : this.$route.params.goodsId;
+    console.log(this.goodsId);
     this.getInfo();
   },
   methods: {
@@ -74,7 +76,7 @@ export default {
         }
       })
         .then(res => {
-          console.log(res)
+          console.log(res);
           if (res.data.code == 200 && res.data.message) {
             this.goodsInfo = res.data.message;
           } else {
@@ -87,12 +89,40 @@ export default {
     },
     onClickLeft() {
       this.$router.go(-1);
+    },
+    // 添加购物车
+    addGoodsToCart() {
+      // 取出购物车内的商品数据
+      let cartInfo = localStorage.cartInfo
+        ? JSON.parse(localStorage.cartInfo)
+        : [];
+      // 判断购物车里有没有这个商品
+      // 没有返回undefined
+      let isHaveGoods = cartInfo.find(cart => cart.goodsId === this.goodsId);
+      console.log(isHaveGoods);
+      if (!isHaveGoods) {
+        let newGoodsInfo = {
+          goodsId: this.goodsInfo.ID,
+          name: this.goodsInfo.NAME,
+          price: this.goodsInfo.PRESENT_PRICE,
+          image: this.goodsInfo.IMAGE1,
+          count: 1
+        };
+        cartInfo.push(newGoodsInfo);
+        // 添加到localStorage
+        localStorage.cartInfo = JSON.stringify(cartInfo);
+        Toast.success("添加成功");
+      } else {
+        Toast.success("已有此商品");
+      }
+
+      this.$router.push({ name: "Cart" });
     }
   },
   filters: {
-      moneyFilter(money) {
-          return toMoney(money)
-      }
+    moneyFilter(money) {
+      return toMoney(money);
+    }
   }
 };
 </script>
@@ -105,20 +135,20 @@ export default {
   background-color: #fff;
 }
 .detail {
-    font-size: 0;
+  font-size: 0;
 }
 .good-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background-color: white;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-flow: nowrap;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-flow: nowrap;
 }
 .good-bottom > div {
-    flex: 1;
-    padding: .3125rem;
+  flex: 1;
+  padding: 0.3125rem;
 }
 </style>
